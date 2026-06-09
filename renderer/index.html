@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CCCD Scanner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="titlebar">
+    <div class="brand">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>
+      <span>CCCD Scanner</span>
+    </div>
+    <div class="window-controls">
+      <button id="btn-minimize" title="Thu nhỏ xuống khay">─</button>
+      <button id="btn-close" title="Đóng ứng dụng">✕</button>
+    </div>
+  </div>
+  <div class="container">
+    <!-- Hộp thoại chính tương tự UniKey -->
+    <div class="unikey-layout">
+      <!-- Cột trái: Cấu hình -->
+      <div class="unikey-left">
+        <fieldset class="control-group">
+          <legend>Điều khiển</legend>
+          
+          <div class="form-row">
+            <label for="com-port">Cổng COM:</label>
+            <div class="port-select-wrapper">
+              <select id="com-port" class="modern-input">
+                <option value="">Chọn cổng COM...</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="encoding-label">Ngôn ngữ:</label>
+            <div class="port-select-wrapper">
+              <input type="text" id="encoding-label" class="modern-input" value="UTF-8" readonly>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="status-bar-inline">
+          <div class="status-indicator" id="status-dot"></div>
+          <div class="status-text" id="status-msg">Đang kiểm tra...</div>
+        </div>
+      </div>
+
+      <!-- Cột phải: Các nút hành động -->
+      <div class="unikey-right">
+        <button id="btn-hide" class="btn btn-action">
+          <span class="icon text-success">✔</span>
+          <span>Đóng</span>
+        </button>
+        <button id="btn-exit" class="btn btn-action">
+          <span class="icon text-danger">✖</span>
+          <span>Kết thúc</span>
+        </button>
+        <button id="btn-expand" class="btn btn-action">
+          <span class="icon text-primary">▼</span>
+          <span id="expand-text">Mở rộng</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bảng điều khiển nâng cao -->
+    <div class="advanced-panel" id="panel-advanced">
+      <fieldset class="control-group">
+        <legend>Cấu hình nâng cao</legend>
+        
+        <div class="advanced-grid">
+          <div class="form-row">
+            <label for="baud-rate">Baud Rate:</label>
+            <select id="baud-rate" class="modern-input">
+              <option value="1200">1200</option>
+              <option value="2400">2400</option>
+              <option value="4800">4800</option>
+              <option value="9600" selected>9600</option>
+              <option value="19200">19200</option>
+              <option value="38400">38400</option>
+              <option value="57600">57600</option>
+              <option value="115200">115200</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="data-bits">Data Bits:</label>
+            <select id="data-bits" class="modern-input">
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8" selected>8</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="parity">Parity:</label>
+            <select id="parity" class="modern-input">
+              <option value="none" selected>None</option>
+              <option value="even">Even</option>
+              <option value="odd">Odd</option>
+              <option value="mark">Mark</option>
+              <option value="space">Space</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="stop-bits">Stop Bits:</label>
+            <select id="stop-bits" class="modern-input">
+              <option value="1" selected>1</option>
+              <option value="1.5">1.5</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+
+          <div class="form-row" style="grid-column: 1 / -1;">
+            <label for="encoding">Encoding:</label>
+            <select id="encoding" class="modern-input">
+              <option value="utf8" selected>UTF-8</option>
+              <option value="ascii">ASCII</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="advanced-actions">
+          <button id="btn-save-advanced" class="btn btn-action btn-small">Lưu cấu hình</button>
+          <button id="btn-reset-advanced" class="btn btn-action btn-small">Mặc định</button>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

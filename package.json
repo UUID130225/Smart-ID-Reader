@@ -1,0 +1,45 @@
+{
+  "name": "cccd-scanner",
+  "version": "1.0.0",
+  "description": "Phần mềm quét Căn cước công dân qua cổng COM",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.cccdscanner.app",
+    "productName": "Scan Citizen ID Card",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.png",
+      "requestedExecutionLevel": "requireAdministrator"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Scan Citizen ID Card",
+      "include": "installer.nsh"
+    }
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0",
+    "robotjs": "^0.7.1",
+    "serialport": "^12.0.0"
+  },
+  "devDependencies": {
+    "electron": "^42.2.0",
+    "electron-builder": "^26.8.1"
+  },
+  "keywords": [
+    "cccd",
+    "scanner",
+    "serial",
+    "com",
+    "vietnam"
+  ],
+  "author": "",
+  "license": "MIT"
+}
