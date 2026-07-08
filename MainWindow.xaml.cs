@@ -16,6 +16,7 @@ namespace SmartIDReader
     {
         private readonly SerialPortService _serial;
         private readonly TrayService       _tray;
+        private readonly bool              _startHidden;
 
         private bool        _suppressCbChange = true; // Khóa mặc định trong lúc khởi tạo
         private AppSettings _settings;
@@ -25,12 +26,13 @@ namespace SmartIDReader
         // Windows Messages để theo dõi cắm rút thiết bị USB/COM
         private const int WM_DEVICECHANGE = 0x0219;
 
-        public MainWindow(SerialPortService serial, TrayService tray, bool isAdmin)
+        public MainWindow(SerialPortService serial, TrayService tray, bool isAdmin, bool startHidden = false)
         {
             _suppressCbChange = true;
             InitializeComponent();
             _serial = serial;
             _tray   = tray;
+            _startHidden = startHidden;
 
             if (isAdmin) AdminBadge.Visibility = Visibility.Visible;
 
@@ -90,6 +92,16 @@ namespace SmartIDReader
 
             _settings = SettingsManager.Load();
             
+            // Đồng bộ và dọn dẹp cấu hình auto-start cũ sang Task Scheduler
+            try
+            {
+                AutoStartHelper.SetAutoStart(_settings.StartWithWindows);
+            }
+            catch (Exception ex)
+            {
+                Log.Warning(ex, "Lỗi đồng bộ cấu hình auto-start ban đầu");
+            }
+            
             _suppressCbChange = true;
             try
             {
@@ -111,6 +123,13 @@ namespace SmartIDReader
 
             // Chỉ mở khóa bắt sự kiện thay đổi sau khi toàn bộ UI đã load và kết nối xong
             _suppressCbChange = false;
+
+            if (_startHidden)
+            {
+                Hide();
+                WindowState = WindowState.Normal;
+                ShowInTaskbar = true;
+            }
         }
 
         // ══════════════ PORT LIST ══════════════

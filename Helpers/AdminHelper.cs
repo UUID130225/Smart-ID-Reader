@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Security.Principal;
 
 namespace SmartIDReader.Helpers
@@ -22,7 +23,7 @@ namespace SmartIDReader.Helpers
             }
         }
 
-        public static bool TryRelaunchAsAdmin()
+        public static bool TryRelaunchAsAdmin(string[] args = null)
         {
             try
             {
@@ -33,7 +34,8 @@ namespace SmartIDReader.Helpers
                 {
                     FileName = exePath,
                     UseShellExecute = true,
-                    Verb = "runas"
+                    Verb = "runas",
+                    Arguments = args != null && args.Length > 0 ? string.Join(" ", args.Select(a => $"\"{a}\"")) : ""
                 };
 
                 Process.Start(psi);

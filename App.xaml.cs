@@ -91,7 +91,7 @@ namespace SmartIDReader
 
             if (!isAdmin && !HasArg(e, "--no-admin"))
             {
-                if (AdminHelper.TryRelaunchAsAdmin())
+                if (AdminHelper.TryRelaunchAsAdmin(e.Args))
                 {
                     _mutex?.ReleaseMutex();
                     Log.Information("Relaunching as admin, bye.");
@@ -112,13 +112,18 @@ namespace SmartIDReader
             {
                 var serial = new SerialPortService();
                 var tray = new TrayService(isAdmin);
-                var window = new MainWindow(serial, tray, isAdmin);
+                bool startHidden = HasArg(e, "--hidden");
+                var window = new MainWindow(serial, tray, isAdmin, startHidden);
                 MainWindow = window;
 
-                if (HasArg(e, "--hidden"))
+                if (startHidden)
+                {
                     Log.Information("Khởi động ẩn xuống khay hệ thống.");
-                else
-                    window.Show();
+                    window.WindowState = WindowState.Minimized;
+                    window.ShowInTaskbar = false;
+                }
+                
+                window.Show();
             }
             catch (Exception ex)
             {
