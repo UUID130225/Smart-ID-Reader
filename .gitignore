@@ -1,4 +1,18 @@
-node_modules
-dist
-error.log
-.DS_Store
+## Ignore Visual Studio build and cache files
+.vs/
+[Db]in/
+[Oo]bj/
+[Pp]ublish/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Local Settings / Config
+settings.setting
+
+## Archives
+*.rar
+*.zip
+*.tar.gz
+
